@@ -21,7 +21,7 @@ class Util:
 
     @staticmethod
     def _position_to_angle(position):
-        if not isinstance(position, int) or position < 0 or position > 1000:
-            raise ValueError('Parameter \'position\' must be and int value between 0 and 1000')
+        # if not isinstance(position, int) or position < 0 or position > 1000:
+        #     raise ValueError('Parameter \'position\' must be and int value between 0 and 1000')
 
         return Util._lerp(-125.0, 125.0, position / 1000)

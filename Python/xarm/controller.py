@@ -39,9 +39,9 @@ class Controller:
         if isinstance(servos, int) or isinstance(servos, float):
             if position == None:
                 raise ValueError('Parameter \'position\' missing.')
-            if isinstance(position, int):
-                if position < 0 or position > 1000:
-                    raise ValueError('Parameter \'position\' must be between 0 and 1000.')
+            # if isinstance(position, int):
+                # if position < 0 or position > 1000:
+                #     raise ValueError('Parameter \'position\' must be between 0 and 1000.')
             if isinstance(position, float):
                 if position < -125.0 or position > 125.0:
                     raise ValueError('Parameter \'position\' must be between -125.0 and 125.0.')
@@ -51,13 +51,13 @@ class Controller:
             data.extend([servos.servo_id, servos.position & 0xff, (servos.position & 0xff00) >> 8])
         elif isinstance(servos, list):
             data[0] = len(servos)
-            for servo in servos:            
+            for servo in servos:
                 if isinstance(servo, Servo):
                     data.extend([servo.servo_id, servo.position & 0xff, (servo.position & 0xff00) >> 8])
                 elif len(servo) == 2 and isinstance(servo[0], int):
                     if isinstance(servo[1], int):
-                        if servo[1] < 0 or servo[1] > 1000:
-                            raise ValueError('Parameter \'position\' must be between 0 and 1000.')
+                        # if servo[1] < 0 or servo[1] > 1000:
+                        #     raise ValueError('Parameter \'position\' must be between 0 and 1000.')
                         position = servo[1]
                     elif isinstance(servo[1], float):
                         if servo[1] < -125.0 or servo[1] > 125.0:
@@ -123,7 +123,7 @@ class Controller:
 
     def getBatteryVoltage(self):
         self._send(self.CMD_GET_BATTERY_VOLTAGE)
-        
+
         data = self._recv(self.CMD_GET_BATTERY_VOLTAGE)
         if data != None:
             return (data[1] * 256 + data[0]) / 1000.0
@@ -141,9 +141,9 @@ class Controller:
                 self._device.write(data)
         else:  # Is USB
             report_data = [
-                0, 
-                self.SIGNATURE, 
-                self.SIGNATURE, 
+                0,
+                self.SIGNATURE,
+                self.SIGNATURE,
                 len(data) + 2,
                 cmd
             ]
@@ -165,7 +165,7 @@ class Controller:
 
                 if self.debug:
                     print(' '.join('{:02x}'.format(x) for x in data))
-            
+
                 return data
             else:
                 return None
